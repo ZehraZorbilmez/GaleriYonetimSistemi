@@ -22,6 +22,67 @@ public class Main {
         arabalar.add(a5);
         arabalar.add(a6);
 
+        int secim;
+        boolean calisiyor = true;
+        while (calisiyor) {
+            System.out.println("----Araba Galerisi----");
+            System.out.println("1-Tüm Arabaları Listele");
+            System.out.println("2-Fiyata Göre Filtrele");
+            System.out.println("3-Markaya Göre Ara");
+            System.out.println("4-Çıkış");
+            System.out.println("Seçiminizi giriniz:");
+            secim = input.nextInt();
+            switch (secim) {
+                case 1:
+                    listele(arabalar);
+                    break;
+                case 2:
+                    System.out.print("Filtrelemek istediğiniz max fiyatı giriniz:");
+                    int filtrele = input.nextInt();
+                    filtrele(arabalar,filtrele);
+                    break;
+                case 3:
+                    String marka;
+                    System.out.println("Listelemek istediğiniz araba markasını giriniz:");
+                    input.nextLine();
+                    marka= input.nextLine();
+                    markayaGoreArama(arabalar,marka);
+                    break;
+                case 4:
+                    calisiyor = false;
+                    break;
+                default:
+                    System.out.println("Geçersiz seçim yaptınız");
+
+            }
+
+
+        }
+
 
     }
+    public static void listele(ArrayList<Araba> arabalar){
+        System.out.println("--Mevcut Arabalar--");
+        for(Araba araba:arabalar){
+            System.out.println(araba);
+        }
+        //arabalar.forEach(System.out::println);
+    }
+    public static void markayaGoreArama(ArrayList<Araba> arabalar,String marka){
+        for(Araba araba:arabalar){
+            if(araba.marka.equalsIgnoreCase(marka)){
+                System.out.println(araba);
+            }
+
+        }
+    }
+    public static void filtrele(ArrayList<Araba> arabalar,int fiyat){
+        for(Araba araba :arabalar){
+            if(araba.fiyat < fiyat){
+                System.out.println(araba);
+            }
+        }
+    }
+
+
 }
