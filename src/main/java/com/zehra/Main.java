@@ -25,12 +25,14 @@ public class Main {
         int secim;
         boolean calisiyor = true;
         while (calisiyor) {
-            System.out.println("----Araba Galerisi----");
+            System.out.println("----Galeri Yönetim Sistemi----");
             System.out.println("1-Tüm Arabaları Listele");
             System.out.println("2-Fiyata Göre Filtrele");
             System.out.println("3-Markaya Göre Ara");
-            System.out.println("4-Çıkış");
-            System.out.println("Seçiminizi giriniz:");
+            System.out.println("4-Araba Satın Al");
+            System.out.println("5-Satışları Görüntüle");
+            System.out.println("6-Çıkış");
+            System.out.print("Seçiminizi giriniz:");
             secim = input.nextInt();
             switch (secim) {
                 case 1:
@@ -49,6 +51,10 @@ public class Main {
                     markayaGoreArama(arabalar,marka);
                     break;
                 case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
                     calisiyor = false;
                     break;
                 default:
