@@ -22,6 +22,8 @@ public class Main {
         arabalar.add(a5);
         arabalar.add(a6);
 
+        ArrayList<Satis> satislar = new ArrayList<>();
+
         int secim;
         boolean calisiyor = true;
         while (calisiyor) {
@@ -45,14 +47,26 @@ public class Main {
                     break;
                 case 3:
                     String marka;
-                    System.out.println("Listelemek istediğiniz araba markasını giriniz:");
+                    System.out.print("Listelemek istediğiniz araba markasını giriniz:");
                     input.nextLine();
                     marka= input.nextLine();
                     markayaGoreArama(arabalar,marka);
                     break;
                 case 4:
+                    input.nextLine();
+                    System.out.print("Satın almak istediğiniz araba ID:");
+                    String id= input.nextLine();
+                    Musteri musteri = new Musteri();
+                    System.out.print("Müşteri Adı:");
+                    musteri.ad = input.nextLine();
+                    System.out.print("Müşteri Soyadı:");
+                    musteri.soyad= input.nextLine();
+                    satinAl(arabalar,id,musteri,satislar);
                     break;
                 case 5:
+                    for(Satis satis:satislar){
+                        System.out.println(satis);
+                    }
                     break;
                 case 6:
                     calisiyor = false;
@@ -88,6 +102,24 @@ public class Main {
                 System.out.println(araba);
             }
         }
+    }
+    public static void satinAl(ArrayList<Araba> arabalar,String id,Musteri musteri,ArrayList<Satis> satislar){
+        Araba silinecek = null;
+        for (Araba araba : arabalar) {
+            if (araba.id.equals(id)) {
+                silinecek = araba;
+                break;
+            }
+        }
+        if (silinecek != null) {
+            Satis satis = new Satis(musteri,silinecek);
+            satislar.add(satis);
+            arabalar.remove(silinecek);
+            System.out.println("Satış Gerçekleşti");
+        } else {
+            System.out.println("Belirtilen ID'ye sahip araba bulunamadı.");
+        }
+
     }
 
 
