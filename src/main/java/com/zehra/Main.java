@@ -7,6 +7,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        Main app = new Main();
         Scanner input = new Scanner(System.in);
         Araba a1 = new Araba("Toyota","1","Corolla",2020,500000);
         Araba a2 = new Araba("Renault","2","Clio",2018,350000);
@@ -24,7 +25,7 @@ public class Main {
 
         ArrayList<Satis> satislar = new ArrayList<>();
 
-        int secim;
+        String secim;
         boolean calisiyor = true;
         while (calisiyor) {
             System.out.println("----Galeri Yönetim Sistemi----");
@@ -35,25 +36,24 @@ public class Main {
             System.out.println("5-Satışları Görüntüle");
             System.out.println("6-Çıkış");
             System.out.print("Seçiminizi giriniz:");
-            secim = input.nextInt();
+            secim = input.nextLine();
             switch (secim) {
-                case 1:
-                    listele(arabalar);
+                case "1":
+                    app.listele(arabalar);
                     break;
-                case 2:
+                case "2":
                     System.out.print("Filtrelemek istediğiniz max fiyatı giriniz:");
                     int filtrele = input.nextInt();
-                    filtrele(arabalar,filtrele);
+                    input.nextLine();
+                    app.filtrele(arabalar,filtrele);
                     break;
-                case 3:
+                case "3":
                     String marka;
                     System.out.print("Listelemek istediğiniz araba markasını giriniz:");
-                    input.nextLine();
                     marka= input.nextLine();
-                    markayaGoreArama(arabalar,marka);
+                    app.markayaGoreArama(arabalar,marka);
                     break;
-                case 4:
-                    input.nextLine();
+                case "4":
                     System.out.print("Satın almak istediğiniz araba ID:");
                     String id= input.nextLine();
                     Musteri musteri = new Musteri();
@@ -61,14 +61,14 @@ public class Main {
                     musteri.ad = input.nextLine();
                     System.out.print("Müşteri Soyadı:");
                     musteri.soyad= input.nextLine();
-                    satinAl(arabalar,id,musteri,satislar);
+                    app.satinAl(arabalar,id,musteri,satislar);
                     break;
-                case 5:
+                case "5":
                     for(Satis satis:satislar){
                         System.out.println(satis);
                     }
                     break;
-                case 6:
+                case "6":
                     calisiyor = false;
                     break;
                 default:
@@ -81,29 +81,40 @@ public class Main {
 
 
     }
-    public static void listele(ArrayList<Araba> arabalar){
+    public  void listele(ArrayList<Araba> arabalar){
         System.out.println("--Mevcut Arabalar--");
         for(Araba araba:arabalar){
             System.out.println(araba);
         }
         //arabalar.forEach(System.out::println);
     }
-    public static void markayaGoreArama(ArrayList<Araba> arabalar,String marka){
+    public  void markayaGoreArama(ArrayList<Araba> arabalar,String marka){
+        boolean varMi = false;
         for(Araba araba:arabalar){
-            if(araba.marka.equalsIgnoreCase(marka)){
+            if(araba.marka.toLowerCase().contains(marka.toLowerCase()) ){
+                varMi = true;
                 System.out.println(araba);
             }
 
         }
+        if(varMi == false){
+            System.out.println(marka + " markasına ait araç bulunmamaktadır");
+        }
+
     }
-    public static void filtrele(ArrayList<Araba> arabalar,int fiyat){
+    public  void filtrele(ArrayList<Araba> arabalar,int fiyat){
+        boolean varMi = false;
         for(Araba araba :arabalar){
             if(araba.fiyat < fiyat){
+                varMi = true;
                 System.out.println(araba);
             }
         }
+        if(varMi == false){
+            System.out.println("Bu fiyata uygun araç yok");
+        }
     }
-    public static void satinAl(ArrayList<Araba> arabalar,String id,Musteri musteri,ArrayList<Satis> satislar){
+    public  void satinAl(ArrayList<Araba> arabalar,String id,Musteri musteri,ArrayList<Satis> satislar){
         Araba silinecek = null;
         for (Araba araba : arabalar) {
             if (araba.id.equals(id)) {
