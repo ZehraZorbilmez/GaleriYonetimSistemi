@@ -1,26 +1,38 @@
 package com.zehra;
 
 public class Araba {
-    public String id;
+    private static int sayac=1;
+    public int id;
+    public String baslik;
+    public String resimUrl;
     public String marka;
     public String model;
+    public String kilometre;
+    public String vitesTipi;
+    public String yakitTipi;
     public int yil;
     public int fiyat;
 
-    public Araba(String marka, String id, String model, int yil, int fiyat) {
+    public Araba(String resimUrl,String baslik,String marka, String model, String kilometre, int yil, int fiyat,String vitesTipi,String yakitTipi) {
+        this.id = sayac++;
+        this.baslik = baslik;
+        this.resimUrl = resimUrl;
         this.marka = marka;
-        this.id = id;
         this.model = model;
+        this.kilometre = kilometre;
+        this.vitesTipi = vitesTipi;
+        this.yakitTipi = yakitTipi;
         this.yil = yil;
         this.fiyat = fiyat;
     }
 
     @Override
     public String toString() {
-        return "[ID:" + id + "] "
+        return baslik + "\n" +"[ID:" + id + "] "
                 + marka + ' '+ model + ',' +
-                yil + ',' +
-                fiyat + " TL"
+                yil + ',' + kilometre + "km ,"+ vitesTipi +
+                "," + yakitTipi + "," + fiyat + " TL" +
+                "\n" +resimUrl + "\n"
                 ;
     }
 }
