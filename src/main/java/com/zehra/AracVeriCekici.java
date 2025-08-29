@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AracVeriCekici {
@@ -13,7 +14,7 @@ public class AracVeriCekici {
 
     public ArrayList<Araba> vericek() throws IOException {
 
-       String marka="",model="",km="",vitesTipi="",yakitTipi="",resimUrl="";
+       String marka="",model="",km="",vitesTipi="",yakitTipi="";
        int yil=0,fiyat;
        ArrayList<Araba> arabalar = new ArrayList<>();
 
@@ -27,9 +28,8 @@ public class AracVeriCekici {
 
                 Elements basliklar = doc.select("h4.crop-after.crop-after-40.odd-ca40");
                 Elements detaySayfa = doc.select("a.smallest-text-minus.ovh");
-                Elements images = doc.select("a.smallest-text-minus.ovh img.listing-image");
 
-                if(basliklar.isEmpty() || detaySayfa.isEmpty() || images.isEmpty()){
+                if(basliklar.isEmpty() || detaySayfa.isEmpty() ){
                     System.out.println("Sayfa" + j + ":Elementler bulunamadı , atlanıyor");
                     continue;
                 }
@@ -38,11 +38,17 @@ public class AracVeriCekici {
 
                     String baslik = basliklar.get(i).text();
                     String detayUrl = "https://www.arabam.com" + detaySayfa.get(i).attr("href");
-                    resimUrl = images.get(i).attr("data-src");
 
                     Document detayDoc = Jsoup.connect(detayUrl).
                             userAgent("Mozilla/5.0...")
                             .get();
+
+                    List<String> resimlerUrl = new ArrayList<>();
+                    Elements images = detayDoc.select("div.thumbnailSwiper img");
+
+                    for(Element image:images){
+                        resimlerUrl.add(image.attr("data-src"));
+                    }
 
                     String fiyatStr = detayDoc.select("div.product-price div.desktop-information-price").text().trim();
                     fiyatStr = fiyatStr.replace("TL", "").replace(".", "").trim();
@@ -68,11 +74,9 @@ public class AracVeriCekici {
                             yakitTipi = value;
                         }
                     }
-                    arabalar.add(new Araba(resimUrl, baslik, marka, model, km, yil, fiyat, vitesTipi, yakitTipi));
-                    Thread.sleep(500);
-                }
-                Thread.sleep(500);
+                    arabalar.add(new Araba(resimlerUrl, baslik, marka, model, km, yil, fiyat, vitesTipi, yakitTipi));
 
+                }
             }
 
 
@@ -81,8 +85,5 @@ public class AracVeriCekici {
            e.printStackTrace();
        }
        return arabalar;
-
-
-
    }
 }

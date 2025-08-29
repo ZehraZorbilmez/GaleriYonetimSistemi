@@ -1,10 +1,12 @@
 package com.zehra;
 
+import java.util.List;
+
 public class Araba {
     private static int sayac=1;
     public int id;
     public String baslik;
-    public String resimUrl;
+    public List<String> resimUrl;
     public String marka;
     public String model;
     public String kilometre;
@@ -13,7 +15,7 @@ public class Araba {
     public int yil;
     public int fiyat;
 
-    public Araba(String resimUrl,String baslik,String marka, String model, String kilometre, int yil, int fiyat,String vitesTipi,String yakitTipi) {
+    public Araba(List<String> resimUrl,String baslik,String marka, String model, String kilometre, int yil, int fiyat,String vitesTipi,String yakitTipi) {
         this.id = sayac++;
         this.baslik = baslik;
         this.resimUrl = resimUrl;
@@ -26,13 +28,14 @@ public class Araba {
         this.fiyat = fiyat;
     }
 
+
     @Override
     public String toString() {
         return baslik + "\n" +"[ID:" + id + "] "
                 + marka + ' '+ model + ',' +
                 yil + ',' + kilometre + "km ,"+ vitesTipi +
                 "," + yakitTipi + "," + fiyat + " TL" +
-                "\n" +resimUrl + "\n"
+                "\n" +String.join("\n", resimUrl)+ "\n"
                 ;
     }
 }
